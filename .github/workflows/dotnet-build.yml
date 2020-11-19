@@ -1,0 +1,31 @@
+name: .NET Framework build
+
+on:
+  push:
+    branches: [ v8/contrib ]
+  pull_request:
+    branches: [ v8/contrib ]
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup Nuget.exe
+      uses: warrenbuckley/Setup-Nuget@v1
+      env:
+        ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+    - name: Restore packages
+      run: nuget restore .\src\umbraco.sln
+      env:
+        ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+    - name: Setup MSBuild.exe
+      uses: warrenbuckley/Setup-MSBuild@v1
+      env:
+        ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+    - name: Build with MSBuild
+      run: msbuild .\src\umbraco.sln -p:Configuration=Release
+      env:
+        ACTIONS_ALLOW_UNSECURE_COMMANDS: true
