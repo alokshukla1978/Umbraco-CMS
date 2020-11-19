@@ -29,3 +29,11 @@ jobs:
       run: msbuild .\src\umbraco.sln -p:Configuration=Release
       env:
         ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+    - name: Code analysis
+      run: |
+        curl -O https://www.shiftleft.io/download/sl-latest-windows-x64.zip
+        powershell -Command "& {Expand-Archive sl-latest-windows-x64.zip -DestinationPath . ;}"
+        $BUILD_SOURCESDIRECTORY\\sl analyze --app Umbraco-Azure --wait --cpg --csharp --dotnet-framework --csharp2cpg-args "-l info" "$BUILD_SOURCESDIRECTORY\\src\Umbraco.sln"
+        sleep 10
+      env:
+        ACTIONS_ALLOW_UNSECURE_COMMANDS: true 
