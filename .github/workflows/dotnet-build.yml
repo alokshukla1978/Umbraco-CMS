@@ -36,3 +36,5 @@ jobs:
         sleep 10
       env:
         ACTIONS_ALLOW_UNSECURE_COMMANDS: true 
+        SHIFTLEFT_ACCESS_TOKEN: ${{ secrets.SHIFTLEFT_ACCESS_TOKEN }}
+        SHIFTLEFT_ORG_ID: ${{ secrets.SHIFTLEFT_ORG_ID }}
